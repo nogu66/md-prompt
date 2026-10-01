@@ -1,0 +1,6 @@
+{
+  "description": "md-prompt: paints Markdown onto the prompt box as you type — fenced code as a syntax-highlighted card (closed or still being typed), inline code, bold, italic, strikethrough, lists, task lists, quotes, headings, tables, links, images, HTML. Paint only: it never changes the text you typed. Hooks prompt.edit and prompt.fill; the mode is the plugin's `mode` setting in /config, and /md-prompt on|code|off|toggle writes it. Needs CLAUDE_CODE_ENABLE_FUNCTION_HOOKS=1; builds without function hooks ignore the modules key.",
+  "modules": [
+    "./register.tsx"
+  ]
+}

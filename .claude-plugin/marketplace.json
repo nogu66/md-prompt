@@ -1,0 +1,18 @@
+{
+  "name": "nogu66",
+  "owner": {
+    "name": "nogu66"
+  },
+  "metadata": {
+    "description": "nogu66's Claude Code plugins and mods"
+  },
+  "plugins": [
+    {
+      "name": "md-prompt",
+      "source": "./plugins/md-prompt",
+      "description": "Paints Markdown onto the prompt box as you type: syntax-highlighted code blocks, inline code, bold, italic, lists, tables, quotes, links and headings. Paint only, your text is never changed.",
+      "homepage": "https://github.com/nogu66/md-prompt",
+      "repository": "https://github.com/nogu66/md-prompt"
+    }
+  ]
+}

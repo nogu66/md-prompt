@@ -1,0 +1,12 @@
+{
+  "name": "md-prompt-repo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "claude --plugin-dir plugins/md-prompt",
+    "test": "bun test tests",
+    "test:hooks": "claude plugin test plugins/md-prompt",
+    "typecheck": "claude plugin validate plugins/md-prompt > /dev/null && tsc -p plugins/md-prompt",
+    "validate": "claude plugin validate . && claude plugin validate plugins/md-prompt"
+  }
+}
