@@ -149,7 +149,7 @@ claude plugin validate plugins/md-prompt  # プラグイン: どのイベント�
 tsc -p plugins/md-prompt                  # 型チェック（bun run typecheck でも可）
 ```
 
-`claude plugin validate plugins/md-prompt` は、使っている Claude Code ビルドの型定義もプラグインの隣に書き出すので、`tsc` の前に実行してください。導入済みのコピーはバージョンが変わったときだけ更新されるので、リリースのたびに `plugins/md-prompt/.claude-plugin/plugin.json` のバージョンを上げてください。
+プラグインをセッションで読み込むと（`claude --plugin-dir plugins/md-prompt`、ヘッドレスなら `claude -p "/cost" --plugin-dir plugins/md-prompt`）、使っている Claude Code ビルドの型定義と `tsconfig.json` が、プラグインの隣に書き出されます。`tsc` にはこれが必要で、`bun run typecheck` は両方を実行します。`validate` と `test` は書き出しません。導入済みのコピーはバージョンが変わったときだけ更新されるので、リリースのたびに `plugins/md-prompt/.claude-plugin/plugin.json` のバージョンを上げてください。
 
 ## ライセンス
 

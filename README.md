@@ -149,7 +149,7 @@ claude plugin validate plugins/md-prompt  # the plugin: which events it hooks, w
 tsc -p plugins/md-prompt                  # type-check (or: bun run typecheck)
 ```
 
-`claude plugin validate plugins/md-prompt` also writes the type declarations of your Claude Code build next to the plugin, so run it before `tsc`. Bump the version in `plugins/md-prompt/.claude-plugin/plugin.json` with each release, since installed copies update only when it changes.
+Loading the plugin in a session (`claude --plugin-dir plugins/md-prompt`, or `claude -p "/cost" --plugin-dir plugins/md-prompt` for a headless run) writes the type declarations of your Claude Code build and a `tsconfig.json` next to the plugin; `tsc` needs them, and `bun run typecheck` does both. `validate` and `test` do not write them. Bump the version in `plugins/md-prompt/.claude-plugin/plugin.json` with each release, since installed copies update only when it changes.
 
 ## License
 
