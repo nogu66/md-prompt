@@ -4,10 +4,10 @@
 
 Claude Code の入力欄に、入力中の Markdown を装飾して表示します。コードブロックは、閉じフェンスを打つ前からシンタックスハイライト付きのカードになります。
 
-![Claude Code plugin](https://img.shields.io/badge/Claude%20Code-plugin-D97757)
-![Tested on Claude Code 2.1.285](https://img.shields.io/badge/tested%20on-Claude%20Code%202.1.285-555)
-![Function hooks](https://img.shields.io/badge/function%20hooks-experimental-orange)
-![License: MIT](https://img.shields.io/badge/license-MIT-blue)
+![Claude Code plugin](docs/badges/claude-code-plugin.svg)
+![Claude Code 2.1.285+](docs/badges/claude-code-version.svg)
+![Function hooks](docs/badges/function-hooks.svg)
+![License: MIT](docs/badges/license.svg)
 
 <img src="docs/demo.gif" alt="md-prompt のデモ: 入力欄に打ち込んだ Markdown が、閉じた部分から塗られていく（強調、リスト、タスク、引用、表、各言語のコードフェンス）。続いて /md-prompt off、code、on で塗り方を切り替える" width="800">
 

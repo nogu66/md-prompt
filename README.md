@@ -4,10 +4,10 @@
 
 Markdown, painted onto Claude Code's prompt box as you type. Fenced code becomes a syntax-highlighted card before you even close the fence.
 
-![Claude Code plugin](https://img.shields.io/badge/Claude%20Code-plugin-D97757)
-![Tested on Claude Code 2.1.285](https://img.shields.io/badge/tested%20on-Claude%20Code%202.1.285-555)
-![Function hooks](https://img.shields.io/badge/function%20hooks-experimental-orange)
-![License: MIT](https://img.shields.io/badge/license-MIT-blue)
+![Claude Code plugin](docs/badges/claude-code-plugin.svg)
+![Claude Code 2.1.285+](docs/badges/claude-code-version.svg)
+![Function hooks](docs/badges/function-hooks.svg)
+![License: MIT](docs/badges/license.svg)
 
 <img src="docs/demo.gif" alt="md-prompt demo: Markdown typed into the prompt box is painted as each piece closes (emphasis, lists, tasks, quotes, tables, code fences in several languages), then /md-prompt off, code and on switch the painting" width="800">
 
