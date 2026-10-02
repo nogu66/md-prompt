@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+- Added task boxes without a bullet: a `[ ]` or `[x]` opening a line is painted like `- [ ]` and `- [x]`, so a checklist typed as `[ ] todo` gets its boxes too
+
 ## 0.1.0
 
 - Added painting of fenced code blocks in the prompt box: a card with a fixed background and syntax colours, painted from the opening fence on, so a block still being typed is already coloured; `~~~` fences, indented code, and fences inside lists and quotes work too

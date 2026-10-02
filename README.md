@@ -57,7 +57,7 @@ Markdown, painted onto Claude Code's prompt box as you type. Fenced code becomes
 | `` `code` `` | A chip |
 | `**bold**` `*italic*` `***both***` `~~strike~~` | The text styled, the markers dimmed. CommonMark's rules: nested, across the lines of a paragraph |
 | `- item` `* item` `1. item` (nested) | The marker coloured and bold, the text as typed |
-| `- [ ]` `- [x]` | The box amber while open, green when done |
+| `- [ ]` `- [x]`, or `[ ]` `[x]` opening a line with no bullet | The box amber while open, green when done |
 | `> quote`, `>> nested` | The marker greyed, the text italic; lists and fences inside a quote work |
 | `# H1` to `###### H6`, setext, closing `#`s | The marker dimmed. H1 bold and underlined, H2 bold, H3 bold italic, H4 plain, H5 italic, H6 faint italic |
 | `---` `***` `___` | Dimmed |
