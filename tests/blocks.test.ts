@@ -116,9 +116,48 @@ describe("task lists", () => {
 
   test("a box that is not followed by a space, or not opening an item, is plain", () => {
     expect(at("- [x]done", "[x]done")).toEqual({})
-    expect(at("[ ] not in a list", "[ ]")).toEqual({})
     expect(at("- [y] other", "[y]")).toEqual({})
     expect(at("- text [ ] later", "[ ]")).toEqual({})
+  })
+
+  test("a box opening a line is a task even with no bullet before it", () => {
+    expect(at("[ ] todo", "[ ]")).toMatchObject({ color: PALETTE.taskTodo, bold: true })
+    expect(at("[x] done", "[x]")).toMatchObject({ color: PALETTE.taskDone, bold: true })
+    expect(at("[X] done", "[X]")).toMatchObject({ color: PALETTE.taskDone })
+    expect(at("[ ]", "[ ]")).toMatchObject({ color: PALETTE.taskTodo })
+    expect(at("[x] done", "done")).toEqual({})
+    expect(at("  [x] indented", "[x]")).toMatchObject({ color: PALETTE.taskDone })
+  })
+
+  test("every line of a bulletless checklist gets its box, under a line of text or in a quote too", () => {
+    const text = "todo:\n[x] one\n[ ] two\n[x] three"
+    const styles = paint(text)
+    expect(styles[text.indexOf("[x] one")]).toMatchObject({ color: PALETTE.taskDone })
+    expect(styles[text.indexOf("[ ] two")]).toMatchObject({ color: PALETTE.taskTodo })
+    expect(styles[text.indexOf("[x] three")]).toMatchObject({ color: PALETTE.taskDone })
+    expect(at("> [ ] quoted", "[ ]")).toMatchObject({ color: PALETTE.taskTodo })
+    expect(at("> [ ] quoted", "quoted")).toEqual({ italic: true })
+    expectValidRuns(text)
+  })
+
+  test("the text after a bulletless box keeps its inline Markdown", () => {
+    expect(at("[x] **bold** and `code`", "bold")).toMatchObject({ bold: true })
+    expect(at("[x] **bold** and `code`", "code")).toMatchObject({ backgroundColor: PALETTE.inlineBg })
+    expect(at("[ ] see [docs](https://a.dev)", "docs")).toMatchObject({ underline: true })
+  })
+
+  test("a bracket that is not a box at the start of a line is plain", () => {
+    expect(at("[x]done", "[x]done")).toEqual({})
+    expect(at("[y] other", "[y]")).toEqual({})
+    expect(at("text [ ] later", "[ ]")).toEqual({})
+    expect(at("- [x] [ ] twice", "[ ]")).toEqual({})
+    expect(at("[x]: https://a.dev", "x")).toMatchObject({ color: PALETTE.link }) // still a link definition
+    expect(at("    [x] code", "[x] code")).toMatchObject({ backgroundColor: PALETTE.codeBg })
+    expect(at("```\n[x] code\n```", "[x] code")).toMatchObject({ backgroundColor: PALETTE.codeBg, color: PALETTE.codeFg })
+  })
+
+  test("code-only mode paints no box", () => {
+    expect(at("[x] done", "[x]", 0, { codeOnly: true })).toEqual({})
   })
 })
 

@@ -11,7 +11,8 @@
 //     a paragraph, so a list item's wrapped lines never turn into code.
 // Deliberate deviations for prompts: only `<!--` starts an HTML block (an XML tag on its own line
 // is painted as a tag and its content is still Markdown), a table row without a `|` ends the table,
-// and a setext heading is a single line, not ending like a sentence, over `===` / `---` of three or
+// a `[ ]` / `[x]` opening a line of text is a task box even with no bullet before it (a checklist
+// typed as `[ ] todo`), and a setext heading is a single line, not ending like a sentence, over `===` / `---` of three or
 // more characters (so a `---` divider under a paragraph stays a divider, and typing `- item` under a
 // line never flashes it as a heading).
 //
@@ -163,6 +164,7 @@ export function decorateBlocks(text: string, codeOnly: boolean): Decoration[] {
   let table = false
   let icode = false
   let comment = false
+  let boxed = false // a task box was painted on this line
 
   const recount = () => {
     quotes = 0
@@ -309,6 +311,7 @@ export function decorateBlocks(text: string, codeOnly: boolean): Decoration[] {
   // ---- one line ---------------------------------------------------------------------------------
   const processLine = () => {
     // 1. the open containers claim their part of the line
+    boxed = false
     matched = 0
     for (; matched < stack.length; matched++) {
       peek()
@@ -505,8 +508,17 @@ export function decorateBlocks(text: string, codeOnly: boolean): Decoration[] {
       // link reference / footnote definition (only where a paragraph could start)
       if (ch === 91 && !para && definition()) return
 
-      // table row, paragraph text
+      // table row
       if (table && tryTableRow()) return
+
+      // a task box with no bullet before it: the box is painted, what follows is read as usual
+      if (ch === 91 && !boxed) {
+        p = nwPos
+        col = nwCol
+        if (taskBox()) continue
+      }
+
+      // paragraph text
       if (para) {
         para.segs.push({ o: nwPos, len: le - nwPos })
         return
@@ -564,17 +576,22 @@ export function decorateBlocks(text: string, codeOnly: boolean): Decoration[] {
     eatCols(takes)
 
     // GFM task list: `[ ]` / `[x]` opening the item's text
-    if (!empty && text.charCodeAt(p) === 91 && text.charCodeAt(p + 2) === 93 && (p + 3 === le || isSp(text.charCodeAt(p + 3)))) {
-      const mark = text.charCodeAt(p + 1)
-      if (mark === 32 || mark === 120 || mark === 88) {
-        paint(p, p + 3, mark === 32 ? TODO : DONE)
-        p += 3
-        col += 3
-        peek()
-        p = nwPos
-        col = nwCol
-      }
-    }
+    if (!empty) taskBox()
+    return true
+  }
+
+  /** `[ ]` / `[x]` at `p`, then a blank or the end of the line: paint the box and step past it and its blanks. */
+  const taskBox = (): boolean => {
+    if (text.charCodeAt(p) !== 91 || text.charCodeAt(p + 2) !== 93 || (p + 3 !== le && !isSp(text.charCodeAt(p + 3)))) return false
+    const mark = text.charCodeAt(p + 1)
+    if (mark !== 32 && mark !== 120 && mark !== 88) return false
+    paint(p, p + 3, mark === 32 ? TODO : DONE)
+    p += 3
+    col += 3
+    peek()
+    p = nwPos
+    col = nwCol
+    boxed = true
     return true
   }
 
