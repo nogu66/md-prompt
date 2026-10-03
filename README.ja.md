@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/icon.svg" alt="md-prompt のアイコン" width="112">
+
 # md-prompt
 
 Claude Code の入力欄に、入力中の Markdown を装飾して表示します。コードブロックは、閉じフェンスを打つ前からシンタックスハイライト付きのカードになります。

@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/icon.svg" alt="md-prompt icon" width="112">
+
 # md-prompt
 
 Markdown, painted onto Claude Code's prompt box as you type. Fenced code becomes a syntax-highlighted card before you even close the fence.
