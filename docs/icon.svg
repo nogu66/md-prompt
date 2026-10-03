@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" fill="#141413"/>
+  <!-- the prompt box -->
+  <rect x="72" y="112" width="880" height="800" rx="120" fill="#faf9f5"/>
+  <!-- the typed line: chevron, then **bold** with its markers dimmed -->
+  <path d="M161 246 L215 306 L161 366" fill="none" stroke="#141413" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M307.0 272.0 L307.0 340.0 M277.6 289.0 L336.4 323.0 M277.6 323.0 L336.4 289.0 M403.0 272.0 L403.0 340.0 M373.6 289.0 L432.4 323.0 M373.6 323.0 L432.4 289.0 M747.0 272.0 L747.0 340.0 M717.6 289.0 L776.4 323.0 M717.6 323.0 L776.4 289.0 M843.0 272.0 L843.0 340.0 M813.6 289.0 L872.4 323.0 M813.6 323.0 L872.4 289.0" fill="none" stroke="#b0aea5" stroke-width="20" stroke-linecap="round"/>
+  <rect x="469" y="248" width="220" height="116" rx="32" fill="#d97757"/>
+  <!-- the code card -->
+  <rect x="136" y="482" width="752" height="340" rx="56" fill="#141413"/>
+  <rect x="212" y="568" width="340" height="62" rx="31" fill="#6a9bcc"/>
+  <rect x="212" y="674" width="480" height="62" rx="31" fill="#788c5d"/>
+</svg>
