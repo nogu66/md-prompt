@@ -81,20 +81,13 @@ test('the text of a fill is never changed', async ($, on) => {
   expect(e.text).toBe(text)
 })
 
-test('the mode setting off paints nothing', { options: { mode: 'off' } }, async ($, on) => {
+test('the setting off paints nothing', { options: { enabled: false } }, async ($, on) => {
   const fill = recordFills(on)
   const e = await fill($, { text: FENCE, mode: 'replace' })
   expect(e.decorations).toBeUndefined()
 })
 
-test('the mode setting code paints code and not emphasis', { options: { mode: 'code' } }, async ($, on) => {
-  const fill = recordFills(on)
-  const e = await fill($, { text: '**bold** `code`', mode: 'replace' })
-  expect(e.decorations.some((d: any) => d.bold)).toBe(false)
-  expect(e.decorations.some((d: any) => d.backgroundColor)).toBe(true)
-})
-
-test('a bad mode value falls back to on', { options: { mode: 'sideways' } }, async ($, on) => {
+test('a mode left in settings by 0.1.x is ignored, and painting is on', { options: { mode: 'off' } }, async ($, on) => {
   const fill = recordFills(on)
   const e = await fill($, { text: FENCE, mode: 'replace' })
   expect(e.decorations.length).toBeGreaterThan(0)
@@ -104,30 +97,30 @@ test('/md-prompt off writes the setting and stops painting at once', async ($, o
   const fill = recordFills(on)
   const written = acceptSettings(on)
   const result = await run($, 'off')
-  expect(written).toEqual([{ key: 'md-prompt.mode', value: 'off' }])
+  expect(written).toEqual([{ key: 'md-prompt.enabled', value: false }])
   expect(result.text).toContain('off')
   expect(result.text).not.toContain('not saved')
   const e = await fill($, { text: FENCE, mode: 'replace' })
   expect(e.decorations).toBeUndefined()
 })
 
-test('/md-prompt code, then on, switch the mode back and forth', async ($, on) => {
+test('/md-prompt off, then on, switch painting back and forth', async ($, on) => {
   const fill = recordFills(on)
   const written = acceptSettings(on)
-  await run($, 'code')
+  await run($, 'off')
   let e = await fill($, { text: '**bold**', mode: 'replace' })
-  expect(e.decorations).toEqual([]) // code mode: no emphasis, and nothing else in this text
+  expect(e.decorations).toBeUndefined()
   await run($, 'on')
   e = await fill($, { text: '**bold**', mode: 'replace' })
   expect(e.decorations.some((d: any) => d.bold)).toBe(true)
-  expect(written.map((w) => w.value)).toEqual(['code', 'on'])
+  expect(written.map((w) => w.value)).toEqual([false, true])
 })
 
-test('/md-prompt toggle flips between off and on', { options: { mode: 'off' } }, async ($, on) => {
+test('/md-prompt toggle flips between off and on', { options: { enabled: false } }, async ($, on) => {
   const written = acceptSettings(on)
   await run($, 'toggle')
   await run($, 'toggle')
-  expect(written.map((w) => w.value)).toEqual(['on', 'off'])
+  expect(written.map((w) => w.value)).toEqual([true, false])
 })
 
 test('a refused setting still applies for the session, and says it was not saved', async ($, on) => {
@@ -143,8 +136,10 @@ test('a refused setting still applies for the session, and says it was not saved
 test('status and a bad argument write nothing', async ($, on) => {
   const written = acceptSettings(on)
   const status = await run($, '')
-  expect(status.text).toContain('/md-prompt on | code | off | toggle')
+  expect(status.text).toContain('/md-prompt on | off | toggle')
   const bad = await run($, 'maybe')
   expect(bad.text).toContain('"maybe"')
+  const code = await run($, 'code')
+  expect(code.text).toContain('"code"')
   expect(written).toEqual([])
 })

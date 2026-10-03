@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/icon.svg" alt="md-prompt のアイコン" width="112">
+
 # md-prompt
 
 Claude Code の入力欄に、入力中の Markdown を装飾して表示します。コードブロックは、閉じフェンスを打つ前からシンタックスハイライト付きのカードになります。
@@ -78,12 +80,11 @@ Markdown に見えるだけの文は、素のままです（`2*3*4`、`src/*.ts`
 | コマンド | |
 | --- | --- |
 | `/md-prompt on` | すべて塗ります（既定） |
-| `/md-prompt code` | コードブロックとインラインコードだけ塗ります |
 | `/md-prompt off` | 入力欄をプレーンなままにします |
 | `/md-prompt toggle` | off と on を切り替えます |
 | `/md-prompt` | 現在のモードを表示します |
 
-モードはプラグインの **Markdown painting** 設定で、`/config` に行があります（"Markdown" で検索）。そこからも変更できます。設定はセッションをまたいで保存され、`/md-prompt <モード>` はその行を書き換えて、すぐに反映します。
+on / off はプラグインの **Markdown painting** 設定で、`/config` にトグルがあります（"Markdown" で検索）。そこからも変更できます。設定はセッションをまたいで保存され、`/md-prompt on`・`off`・`toggle` はそのトグルを書き換えて、すぐに反映します。
 
 ## 仕組み
 
