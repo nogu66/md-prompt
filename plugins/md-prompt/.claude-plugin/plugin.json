@@ -18,11 +18,11 @@
     "claude-mods"
   ],
   "userConfig": {
-    "mode": {
-      "type": "string",
+    "enabled": {
+      "type": "boolean",
       "title": "Markdown painting",
-      "description": "on: paint everything. code: paint only fenced code and inline code. off: leave the prompt box as plain text. /md-prompt on|code|off changes it too.",
-      "default": "on"
+      "description": "Paint Markdown onto the prompt box as you type. Off leaves the prompt box as plain text. /md-prompt on|off|toggle changes it too.",
+      "default": true
     }
   }
 }

@@ -78,12 +78,11 @@ Code is highlighted for `js` `jsx` `ts` `tsx`, `py`, `sh` `bash` `zsh`, `json`, 
 | Command | |
 | --- | --- |
 | `/md-prompt on` | Paint everything (the default) |
-| `/md-prompt code` | Paint only fenced code and inline code |
 | `/md-prompt off` | Leave the prompt box as plain text |
 | `/md-prompt toggle` | Switch between off and on |
 | `/md-prompt` | Show the current mode |
 
-The mode is the plugin's **Markdown painting** setting, a row in `/config` (search for "Markdown"), so you can change it there too. It is kept across sessions, and `/md-prompt <mode>` writes that row and applies at once.
+On or off is the plugin's **Markdown painting** setting, a toggle in `/config` (search for "Markdown"), so you can change it there too. It is kept across sessions, and `/md-prompt on`, `off` or `toggle` writes that toggle and applies at once.
 
 ## How it works
 

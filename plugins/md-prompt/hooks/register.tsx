@@ -10,7 +10,7 @@
 //                 so only then are offsets into `e.text` offsets into the box.
 // The draft's characters, the cursor and other plugins' decorations pass through as they came.
 //
-// The mode is the plugin's `mode` setting (userConfig), a row in /config. `/md-prompt <mode>`
+// The mode is the plugin's `enabled` setting (userConfig), a toggle in /config. `/md-prompt <mode>`
 // writes that row, as a change in /config would; the engine then reloads this module with the
 // new value, which `register` reads from `options`. Where there is no /config row for plugin
 // fields the write is refused: the mode then holds for the rest of this activation only.
@@ -37,15 +37,15 @@ function paint(value: Mode, text: string) {
 }
 
 export const register: Register = (on, options) => {
-  let mode: Mode = readMode(options.mode)
+  let mode: Mode = readMode(options.enabled)
 
   on("session.start", async ($, e, next) => {
     const r = await next(e)
     await $.command
       .register({
         name: "md-prompt",
-        description: "Turn Markdown painting in the prompt box on, off, or code-only",
-        argumentHint: "[on | code | off | toggle]",
+        description: "Turn Markdown painting in the prompt box on or off",
+        argumentHint: "[on | off | toggle]",
         immediate: true,
       })
       .catch((err: unknown) => $.ui.log(`md-prompt: command.register failed: ${err}`))
@@ -61,7 +61,7 @@ export const register: Register = (on, options) => {
     // A refusal must never escape the hook: it only means the mode is not kept for next time
     let failure: string | null
     try {
-      const result = await $.config.set({ key: "md-prompt.mode", value: mode })
+      const result = await $.config.set({ key: "md-prompt.enabled", value: mode === "on" })
       failure = result.deny ?? null
     } catch (err) {
       failure = String(err)

@@ -200,7 +200,6 @@ describe("fuzz: random Markdown-shaped drafts", () => {
       const text = randomDraft(next)
       expect(decorateMarkdown(text)).toEqual(decorateMarkdown(text))
       expect(paintFor("on", text)).toEqual(decorateMarkdown(text))
-      expect(paintFor("code", text)).toEqual(decorateMarkdown(text, { codeOnly: true }))
       expect(paintFor("off", text)).toEqual([])
     }
   })
