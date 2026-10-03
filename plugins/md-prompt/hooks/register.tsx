@@ -26,26 +26,6 @@ import {
   type Mode,
 } from "./lib/mode"
 
-// `<plugin>.<field>` of the userConfig field in plugin.json.
-const MODE_SETTING = "md-prompt.mode"
-
-// The slice of `$` used here. The loader only lets `$` reach functions declared at the top of
-// the file, so every `$` call sits in one of the helpers below rather than in a closure.
-type Dollar = {
-  config: { set: (args: { key: string; value: string }) => Promise<{ deny?: string }> }
-  ui: { log: (text: string) => void }
-}
-
-/** Resolves to null when the setting was written, else why not. A refusal must never escape the hook. */
-async function writeMode($: Dollar, value: Mode): Promise<string | null> {
-  try {
-    const result = await $.config.set({ key: MODE_SETTING, value })
-    return result.deny ?? null
-  } catch (err) {
-    return String(err)
-  }
-}
-
 // A hook that throws is skipped with a notice on every keystroke; painting is decoration, so a
 // bug in it must cost the colours, never the notice.
 function paint(value: Mode, text: string) {
@@ -78,7 +58,14 @@ export const register: Register = (on, options) => {
     if (cmd.kind === "usage") return { text: formatUsage(cmd.input) }
     // Applies at once; a written setting reloads the module, which starts in the same mode.
     mode = cmd.mode
-    const failure = await writeMode($, mode)
+    // A refusal must never escape the hook: it only means the mode is not kept for next time
+    let failure: string | null
+    try {
+      const result = await $.config.set({ key: "md-prompt.mode", value: mode })
+      failure = result.deny ?? null
+    } catch (err) {
+      failure = String(err)
+    }
     return { text: failure ? `${describeMode(mode)} (not saved for next time: ${failure})` : describeMode(mode) }
   })
 

@@ -22,12 +22,7 @@
       "type": "string",
       "title": "Markdown painting",
       "description": "on: paint everything. code: paint only fenced code and inline code. off: leave the prompt box as plain text. /md-prompt on|code|off changes it too.",
-      "default": "on",
-      "options": [
-        "on",
-        "code",
-        "off"
-      ]
+      "default": "on"
     }
   }
 }

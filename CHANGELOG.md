@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Changed the `mode` row in `/config` from a picker to a text field, as the plugin directory does not accept `options` on a setting yet; `on`, `code` and `off` work as before, anything else counts as `on`, and `/md-prompt` is unchanged
+- Added a README in the plugin folder that says what each hook does and that `md-prompt.mode` is the only setting the plugin writes
+
 ## 0.1.2
 
 - Fixed paths with `__tests__`, `__pycache__`, `__mocks__`, `__snapshots__` and other `_` segments being painted bold: an `_` run right after a `/` no longer opens and one right before a `/` no longer closes, like the `*` in `src/*.ts`, and the Jest and Python directory names join the `__init__` exemption (#4)
