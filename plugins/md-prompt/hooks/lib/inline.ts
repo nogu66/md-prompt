@@ -111,7 +111,7 @@ const DUNDER_RE = /[a-z]{1,20}(?=__(?!\w))/y
 const DUNDERS = new Set(
   `init main name file doc dict class module all slots repr str len call enter exit getitem setitem delitem iter next new
    del eq ne lt gt le ge hash bool add sub mul truediv floordiv mod pow contains getattr setattr version author package
-   path builtins annotations post_init`
+   path builtins annotations post_init pycache tests mocks snapshots fixtures`
     .split(/\s+/)
     .filter(Boolean),
 )
@@ -281,10 +281,11 @@ export function paintInline(s: string, refs: Refs, codeOnly: boolean, emit: Emit
       if (!right && !prevWs && isCjk(next)) right = true
     }
     const canOpen = ch === UNDERSCORE ? left && (!right || prevP) : left
-    const canClose = ch === UNDERSCORE ? right && (!left || nextP) : right
+    // `__tests__/` and `__generated__/` are path segments: an `_` run right before a `/` does not close
+    const canClose = ch === UNDERSCORE ? right && (!left || nextP) && next !== 47 : right
     // `2*3*4`, `x**2 + y**2` and `src/*.ts and lib/*.ts` are arithmetic and globs far more often than
-    // emphasis, so a `*` / `~~` run between two ASCII word characters, or right after a `/`, only closes
-    const noOpen = ch !== UNDERSCORE && canOpen && ((isAlnum(prev) && isAlnum(next)) || prev === 47)
+    // emphasis, so a `*` / `~~` run between two ASCII word characters, or any run right after a `/`, only closes
+    const noOpen = canOpen && ((ch !== UNDERSCORE && isAlnum(prev) && isAlnum(next)) || prev === 47)
     if (!canClose && (!canOpen || noOpen)) return
     const d: Delim = { ch, start: i, len, origLen: len, canOpen, noOpen, canClose, prev: tail, next: null }
     if (tail) tail.next = d

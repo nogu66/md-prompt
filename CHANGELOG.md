@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Fixed paths with `__tests__`, `__pycache__`, `__mocks__`, `__snapshots__` and other `_` segments being painted bold: an `_` run right after a `/` no longer opens and one right before a `/` no longer closes, like the `*` in `src/*.ts`, and the Jest and Python directory names join the `__init__` exemption (#4)
+
 ## 0.1.1
 
 - Added task boxes without a bullet: a `[ ]` or `[x]` opening a line is painted like `- [ ]` and `- [x]`, so a checklist typed as `[ ] todo` gets its boxes too
