@@ -1,6 +1,6 @@
 {
   "name": "md-prompt",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Paints Markdown onto Claude Code's prompt box as you type: fenced code becomes a syntax-highlighted card (even before you close the fence), and inline code, bold, italic, lists, task lists, quotes, tables, links and headings are styled. Paint only, your text is never changed.",
   "author": {
     "name": "nogu66"

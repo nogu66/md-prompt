@@ -1,11 +1,11 @@
 # Changelog
 
-## Unreleased
+## 0.2.0
 
 - Changed the setting to an on/off toggle, **Markdown painting** (`enabled`), in place of the `mode` picker, which the plugin directory does not accept; a `mode` left in settings by 0.1.x is ignored, so painting starts on
 - Removed the code-only mode: `/md-prompt` takes `on`, `off` and `toggle`
 - Added a plugin icon, `.claude-plugin/icon.png` (source: `docs/icon.svg`)
-- Added a README in the plugin folder that says what each hook does and that `md-prompt.mode` is the only setting the plugin writes
+- Added a README in the plugin folder that says what each hook does and that `md-prompt.enabled` is the only setting the plugin writes
 
 ## 0.1.2
 
