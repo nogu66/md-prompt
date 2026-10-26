@@ -41,9 +41,12 @@ jobs:
       - name: Validate the plugin
         run: claude plugin validate plugins/md-prompt
       # Loading the plugin in a session is what writes the type declarations of this Claude Code
-      # build and a tsconfig.json next to it (validate and test do not). /cost is a local command:
-      # no model call, and it runs without a login.
+      # build and a tsconfig.json next to it (validate and test do not). A headless run writes
+      # them only into a --plugin-dir it watches, hence CLAUDE_CODE_PLUGIN_DIR_WATCH.
+      # /cost is a local command: no model call, and it runs without a login.
       - name: Write the type declarations
         run: claude -p "/cost" --plugin-dir plugins/md-prompt
+        env:
+          CLAUDE_CODE_PLUGIN_DIR_WATCH: '1'
       - name: Type-check the plugin
         run: tsc -p plugins/md-prompt
